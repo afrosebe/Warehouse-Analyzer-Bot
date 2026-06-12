@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>📦 Warehouse Auction Analyzer</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);min-height:100vh;color:#e0e0e0;padding:16px}
+.wrap{max-width:900px;margin:0 auto}
+h1{text-align:center;font-size:22px;margin-bottom:4px;background:linear-gradient(90deg,#00d2ff,#3a7bd5);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sub{text-align:center;font-size:12px;color:#888;margin-bottom:18px}
+.card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:18px;margin-bottom:14px;backdrop-filter:blur(10px)}
+.ct{font-size:15px;font-weight:700;margin-bottom:12px;color:#fff}
+.up{border:2px dashed rgba(0,210,255,0.4);border-radius:12px;padding:28px 14px;text-align:center;cursor:pointer;transition:.3s;background:rgba(0,210,255,0.03)}
+.up:hover,.up.d{border-color:#00d2ff;background:rgba(0,210,255,0.08)}
+.up .i{font-size:36px;margin-bottom:6px}
+.up .t{font-size:13px;color:#aaa}
+.up .t b{color:#00d2ff}
+#fi{display:none}
+.fi{display:none;background:rgba(0,255,136,0.08);border:1px solid rgba(0,255,136,0.3);border-radius:10px;padding:10px 14px;margin-top:10px;font-size:12px;color:#00ff88;align-items:center;gap:8px}
+.fi.s{display:flex}
+select{width:100%;padding:11px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);color:#fff;font-size:14px;outline:none;-webkit-appearance:none;appearance:none}
+select:focus{border-color:#00d2ff}
+select option{background:#1a1a2e;color:#fff}
+label{display:block;font-size:12px;color:#999;margin-bottom:5px}
+.btn{width:100%;padding:13px;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;transition:.3s;display:flex;align-items:center;justify-content:center;gap:8px}
+.bp{background:linear-gradient(135deg,#00d2ff,#3a7bd5);color:#fff}
+.bp:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,210,255,0.3)}
+.bp:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+.bs{background:linear-gradient(135deg,#00b09b,#96c93d);color:#fff}
+.bs:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,176,155,0.3)}
+.sp{display:none;width:18px;height:18px;border:3px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:sp .8s linear infinite}
+.sp.s{display:inline-block}
+@keyframes sp{to{transform:rotate(360deg)}}
+#res{display:none}
+.kg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.kc{background:rgba(255,255,255,0.05);border-radius:12px;padding:12px;text-align:center;border:1px solid rgba(255,255,255,0.08)}
+.kc .v{font-size:20px;font-weight:800;background:linear-gradient(90deg,#00d2ff,#3a7bd5);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.kc .l{font-size:10px;color:#888;margin-top:3px}
+.kc.hl .v{background:linear-gradient(90deg,#ff6b6b,#ffa500);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.kc.ok .v{background:linear-gradient(90deg,#00b09b,#96c93d);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.vd{text-align:center;padding:14px;border-radius:12px;font-size:16px;font-weight:800;margin-bottom:14px}
+.vd.b{background:rgba(0,176,155,0.15);border:1px solid rgba(0,176,155,0.4);color:#00ff88}
+.vd.c{background:rgba(255,165,0,0.15);border:1px solid rgba(255,165,0,0.4);color:#ffa500}
+.vd.k{background:rgba(255,68,68,0.15);border:1px solid rgba(255,68,68,0.4);color:#ff6b6b}
+table{width:100%;border-collapse:collapse;font-size:11px;margin-top:8px}
+th{background:rgba(0,210,255,0.15);color:#00d2ff;padding:8px 6px;text-align:center;font-weight:700;font-size:10px;position:sticky;top:0;z-index:1}
+td{padding:7px 6px;text-align:center;border-bottom:1px solid rgba(255,255,255,0.05)}
+tr:hover td{background:rgba(255,255,255,0.03)}
+.bd{display:inline-block;padding:2px 7px;border-radius:20px;font-size:9px;font-weight:700}
+.bc{background:rgba(255,68,68,0.2);color:#ff6b6b}
+.bm{background:rgba(255,165,0,0.2);color:#ffa500}
+.bs2{background:rgba(0,176,155,0.2);color:#00ff88}
+.tw{max-height:350px;overflow-y:auto;overflow-x:auto;border-radius:10px;border:1px solid rgba(255,255,255,0.08)}
+.tabs{display:flex;gap:5px;margin-bottom:12px}
+.tab{flex:1;padding:9px;text-align:center;border-radius:10px;font-size:11px;font-weight:600;cursor:pointer;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);color:#888;transition:.3s}
+.tab.a{background:rgba(0,210,255,0.15);border-color:rgba(0,210,255,0.4);color:#00d2ff}
+.tc{display:none}
+.tc.a{display:block}
+.tips{background:rgba(255,165,0,0.08);border:1px solid rgba(255,165,0,0.2);border-radius:10px;padding:12px;margin-top:10px}
+.tips h3{font-size:13px;color:#ffa500;margin-bottom:6px}
+.tips li{font-size:11px;color:#ccc;margin-bottom:3px;margin-left:14px}
+.ft{text-align:center;font-size:10px;color:#555;margin-top:20px;padding:10px}
+@media(max-width:480px){body{padding:10px}h1{font-size:18px}.card{padding:12px}.kg{grid-template-columns:1fr 1fr;gap:6px}.kc .v{font-size:16px}table{font-size:10px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>📦 Warehouse Auction Analyzer</h1>
+<p class="sub">Excel upload → Select Warehouse → Analyze → Download</p>
+
+<div class="card">
+<div class="ct">📁 Step 1: Upload Excel File</div>
+<div class="up" id="up"><div class="i">📎</div><div class="t"><b>Tap to upload</b> or drag & drop<br>.xlsx file</div></div>
+<input type="file" id="fi" accept=".xlsx,.xls">
+<div class="fi" id="finfo"><span style="font-size:20px">✅</span><span id="fn"></span></div>
+</div>
+
+<div class="card" id="s2" style="opacity:0.4;pointer-events:none">
+<div class="ct">🏭 Step 2: Select Warehouse ID</div>
+<label>Choose warehouse:</label>
+<select id="ws" style="margin-top:5px"><option value="">-- Select --</option></select>
+<div style="margin-top:10px;text-align:center"><span id="wc" style="font-size:11px;color:#888"></span></div>
+</div>
+
+<div class="card" id="s3" style="opacity:0.4;pointer-events:none">
+<div class="ct">🚀 Step 3: Analyze</div>
+<button class="btn bp" id="ab" onclick="go()"><span class="sp" id="sp"></span><span id="bt">🔍 Analyze & Generate Report</span></button>
+</div>
+
+<div id="res">
+<div class="card">
+<div class="ct">📊 Analysis Results</div>
+<div class="kg">
+<div class="kc"><div class="v" id="rp">-</div><div class="l">Products</div></div>
+<div class="kc"><div class="v" id="rq">-</div><div class="l">Total Qty</div></div>
+<div class="kc hl"><div class="v" id="rt">-</div><div class="l">Tentative Final (₹)</div></div>
+<div class="kc"><div class="v" id="rf">-</div><div class="l">Final MRP (₹)</div></div>
+<div class="kc"><div class="v" id="rm">-</div><div class="l">MRP Value (₹)</div></div>
+<div class="kc ok"><div class="v" id="rd">-</div><div class="l">Discount %</div></div>
+</div>
+<div class="vd" id="vd"></div>
+</div>
+
+<div class="card">
+<div class="tabs">
+<div class="tab a" onclick="sw('a')">📋 Analysis</div>
+<div class="tab" onclick="sw('s')">📦 Summary</div>
+<div class="tab" onclick="sw('c')">🔴 Critical</div>
+</div>
+<div class="tc a" id="ta"><div class="tw"><table><thead><tr><th>#</th><th>Brand</th><th>Product</th><th>MRP</th><th>Qty</th><th>Expiry</th><th>Days</th><th>Ageing</th><th>Tentative Final</th><th>Priority</th></tr></thead><tbody id="tb"></tbody></table></div></div>
+<div class="tc" id="ts"></div>
+<div class="tc" id="tc2"><div class="tw"><table><thead><tr><th>#</th><th>Brand</th><th>Product</th><th>MRP</th><th>Qty</th><th>Expiry</th><th>Days</th><th>Tentative Final</th><th>Final MRP</th></tr></thead><tbody id="tcb"></tbody></table></div></div>
+</div>
+
+<div class="card" style="text-align:center">
+<button class="btn bs" id="db" onclick="dl()">📥 Download Excel Report</button>
+</div>
+</div>
+
+<div class="ft">Warehouse Auction Analyzer • Made with ❤️ • 100% Free</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+let allData=[],headers=[],result=null;
+
+const up=document.getElementById('up'),fi=document.getElementById('fi');
+up.onclick=()=>fi.click();
+up.ondragover=e=>{e.preventDefault();up.classList.add('d')};
+up.ondragleave=()=>up.classList.remove('d');
+up.ondrop=e=>{e.preventDefault();up.classList.remove('d');if(e.dataTransfer.files.length)handle(e.dataTransfer.files[0])};
+fi.onchange=e=>{if(e.target.files.length)handle(e.target.files[0])};
+
+function handle(f){
+if(!f.name.match(/\.xlsx?$/i)){alert('Please upload .xlsx file');return}
+document.getElementById('fn').textContent=f.name+' ('+(f.size/1024).toFixed(1)+' KB)';
+document.getElementById('finfo').classList.add('s');
+const r=new FileReader();
+r.onload=e=>{
+try{
+const wb=XLSX.read(e.target.result,{type:'array',cellDates:true});
+const sn=wb.SheetNames.find(s=>s.toLowerCase().includes('data'))||wb.SheetNames[0];
+const sh=wb.Sheets[sn];
+const j=XLSX.utils.sheet_to_json(sh,{header:1,raw:false,defval:null});
+if(j.length<2){alert('Empty file');return}
+headers=j[0];
+allData=j.slice(1).filter(r=>r.some(c=>c!==null&&c!==''));
+const whCol=headers.findIndex(h=>h&&h.toString().toLowerCase().includes('warehouse'));
+if(whCol===-1){alert('warehouse_id column not found');return}
+const whs=[...new Set(allData.map(r=>r[whCol]).filter(Boolean))].sort();
+const sel=document.getElementById('ws');
+sel.innerHTML='<option value="">-- Select --</option>';
+whs.forEach(w=>{const c=allData.filter(r=>r[whCol]===w).length;sel.innerHTML+=`<option value="${w}">${w} (${c} products)</option>`});
+document.getElementById('wc').textContent=whs.length+' warehouses, '+allData.length+' rows';
+document.getElementById('s2').style.opacity='1';document.getElementById('s2').style.pointerEvents='auto';
+document.getElementById('s3').style.opacity='1';document.getElementById('s3').style.pointerEvents='auto';
+}catch(err){alert('Error: '+err.message)}
+};
+r.readAsArrayBuffer(f);
+}
+
+document.getElementById('ws').onchange=function(){
+const d=this.value?'1':'0.4';
+document.getElementById('s3').style.opacity=d;
+document.getElementById('s3').style.pointerEvents=this.value?'auto':'none';
+document.getElementById('res').style.display='none';
+};
+
+function pf(v){
+if(v===null||v===undefined||v==='')return 0;
+if(typeof v==='number')return isFinite(v)?v:0;
+if(typeof v==='string'){
+  const s=v.replace(/[^0-9.\-]/g,'');
+  if(s===''||s==='-'||s==='.')return 0;
+  const n=parseFloat(s);
+  return isFinite(n)?n:0;
+}
+return 0;
+}
+function fmt(v){v=Math.round(v*100)/100;if(v>=100000)return(v/100000).toFixed(2)+'L';if(v>=1000)return(v/1000).toFixed(1)+'K';if(v>=100)return Math.round(v).toString();return v.toFixed(2)}
+
+function go(){
+const wh=document.getElementById('ws').value;if(!wh)return;
+document.getElementById('sp').classList.add('s');
+document.getElementById('bt').textContent='Analyzing...';
+document.getElementById('ab').disabled=true;
+setTimeout(()=>{
+try{
+const col={};
+headers.forEach((h,i)=>{const hl=h.toString().toLowerCase();
+if(hl.includes('warehouse'))col.wh=i;else if(hl.includes('brand'))col.brand=i;
+else if(hl.includes('product'))col.title=i;else if(hl.includes('mrp'))col.mrp=i;
+else if(hl.includes('quantity')||hl.includes('qty'))col.qty=i;
+else if(hl.includes('mfg')||hl.includes('manufacturing'))col.mfg=i;
+else if(hl.includes('expiry')||hl.includes('expire'))col.exp=i;
+else if(hl.includes('aging')||hl.includes('age'))col.aging=i;
+else if(hl.includes('slab'))col.slab=i;else if(hl.includes('lot'))col.lot=i;
+else if(hl.includes('wh type')||hl.includes('type'))col.whtype=i;
+else if(hl.includes('category'))col.cat=i;else if(hl.includes('yield'))col.yield=i;
+else if(hl.includes('tenative')||hl.includes('tentative'))col.tenative=i;
+else if(hl.includes('tcs value'))col.tcsval=i;
+else if(hl.includes('tcs')&&!hl.includes('value'))col.tcs=i;
+else if(hl.includes('tentative final')||hl.includes('tentative_final'))col.tf=i;
+else if(hl.includes('final mrp')||hl.includes('final_mrp'))col.fm=i;
+});
+
+const rows=allData.filter(r=>r[col.wh]===wh);
+const today=new Date();today.setHours(0,0,0,0);
+let tQ=0,tTF=0,tFM=0,tMRP=0;
+const prods=[];
+
+rows.forEach((r,idx)=>{
+const mrp=pf(r[col.mrp]),qty=pf(r[col.qty]),tf=pf(r[col.tf]),fm=pf(r[col.fm]);
+const aging=pf(r[col.aging]),yieldPct=pf(r[col.yield]),tenative=pf(r[col.tenative]);
+const tcs=pf(r[col.tcs]),tcsVal=pf(r[col.tcsval]);
+let daysLeft=aging;
+if(r[col.exp]){const ed=new Date(r[col.exp]);if(!isNaN(ed))daysLeft=Math.ceil((ed-today)/86400000)}
+let pri,bd;
+if(daysLeft<=30){pri='CRITICAL';bd='bc'}else if(daysLeft<=60){pri='MEDIUM';bd='bm'}else{pri='SAFE';bd='bs2'}
+const mfgS=r[col.mfg]?new Date(r[col.mfg]).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}):'-';
+const expS=r[col.exp]?new Date(r[col.exp]).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}):'-';
+prods.push({idx:idx+1,brand:r[col.brand]||'',title:r[col.title]||'',cat:r[col.cat]||'',mrp,qty,mfg:mfgS,exp:expS,daysLeft:Math.round(daysLeft),aging,slab:r[col.slab]||'',lot:r[col.lot]||'',whType:r[col.whtype]||'',yieldPct,tenative,tcs,tcsVal,tf,fm,pri,bd});
+tQ+=qty;tTF+=tf;tFM+=fm;tMRP+=mrp*qty;
+});
+
+const disc=tMRP>0?((tMRP-tTF)/tMRP*100):0;
+let ver,vcl;
+if(disc>=25){ver='✅ STRONG BUY — High discount, great deal!';vcl='b'}
+else if(disc>=15){ver='🟡 CONSIDER — Moderate discount, negotiate';vcl='c'}
+else if(disc>=10){ver='⚠️ WEAK BUY — Low discount, negotiate more';vcl='k'}
+else{ver='❌ SKIP — Not enough discount';vcl='k'}
+
+const crit=prods.filter(p=>p.pri==='CRITICAL'),med=prods.filter(p=>p.pri==='MEDIUM'),safe=prods.filter(p=>p.pri==='SAFE');
+const cats={};prods.forEach(p=>{const c=p.cat||'Unknown';cats[c]=(cats[c]||0)+p.qty});
+
+result={wh,prods,tQ,tTF,tFM,tMRP,disc,ver,vcl,crit,med,safe,cats};
+
+document.getElementById('rp').textContent=prods.length;
+document.getElementById('rq').textContent=Math.round(tQ).toLocaleString();
+document.getElementById('rt').textContent=fmt(tTF);
+document.getElementById('rf').textContent=fmt(tFM);
+document.getElementById('rm').textContent=fmt(tMRP);
+document.getElementById('rd').textContent=disc.toFixed(1)+'%';
+const vd=document.getElementById('vd');vd.textContent=ver;vd.className='vd '+vcl;
+
+document.getElementById('tb').innerHTML=prods.map(p=>`<tr><td>${p.idx}</td><td style="text-align:left;font-weight:600">${p.brand}</td><td style="text-align:left;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${p.title}">${p.title}</td><td>₹${p.mrp.toFixed(0)}</td><td>${Math.round(p.qty)}</td><td>${p.exp}</td><td style="color:${p.daysLeft<=30?'#ff6b6b':p.daysLeft<=60?'#ffa500':'#00ff88'};font-weight:700">${p.daysLeft}</td><td>${p.slab}</td><td style="font-weight:700;color:#00d2ff">₹${fmt(p.tf)}</td><td><span class="bd ${p.bd}">${p.pri}</span></td></tr>`).join('');
+
+const cTF=crit.reduce((s,p)=>s+p.tf,0),mTF=med.reduce((s,p)=>s+p.tf,0),sTF=safe.reduce((s,p)=>s+p.tf,0);
+const cFM=crit.reduce((s,p)=>s+p.fm,0),mFM=med.reduce((s,p)=>s+p.fm,0),sFM=safe.reduce((s,p)=>s+p.fm,0);
+
+document.getElementById('ts').innerHTML=`<div class="kg" style="grid-template-columns:1fr 1fr 1fr"><div class="kc" style="border-left:3px solid #ff6b6b"><div class="v" style="font-size:14px;color:#ff6b6b">${crit.length}</div><div class="l">🔴 Critical (≤30d)</div><div class="l" style="margin-top:2px">₹${fmt(cTF)}</div></div><div class="kc" style="border-left:3px solid #ffa500"><div class="v" style="font-size:14px;color:#ffa500">${med.length}</div><div class="l">🟡 Medium (31-60d)</div><div class="l" style="margin-top:2px">₹${fmt(mTF)}</div></div><div class="kc" style="border-left:3px solid #00ff88"><div class="v" style="font-size:14px;color:#00ff88">${safe.length}</div><div class="l">🟢 Safe (60+d)</div><div class="l" style="margin-top:2px">₹${fmt(sTF)}</div></div></div><h3 style="font-size:13px;color:#00d2ff;margin:10px 0 6px">📦 Category Breakdown</h3>${Object.entries(cats).sort((a,b)=>b[1]-a[1]).map(([c,q])=>{const pct=(q/tQ*100).toFixed(1);return `<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.05)"><span style="font-size:12px">${c}</span><span style="font-size:12px;font-weight:600">${Math.round(q).toLocaleString()} <span style="color:#888;font-weight:400">(${pct}%)</span></span></div>`}).join('')}<div class="tips"><h3>💡 Auction Tips</h3><ul><li>Critical items (≤30 days) mein zyada discount mil sakta hai</li><li>Bid karte waqt Tentative Final se 10-15% kam pe karo</li><li>High MRP items pe focus karo — woh zyada discount denge</li><li>Agar Tentative Final &lt; 70% MRP hai toh strong buy hai</li></ul></div>`;
+
+const cSorted=prods.filter(p=>p.pri==='CRITICAL').sort((a,b)=>a.daysLeft-b.daysLeft);
+document.getElementById('tcb').innerHTML=cSorted.map((p,i)=>`<tr><td>${i+1}</td><td style="font-weight:600">${p.brand}</td><td style="text-align:left;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${p.title}">${p.title}</td><td>₹${p.mrp.toFixed(0)}</td><td>${Math.round(p.qty)}</td><td>${p.exp}</td><td style="color:#ff6b6b;font-weight:800">${p.daysLeft}d</td><td style="font-weight:700;color:#00d2ff">₹${fmt(p.tf)}</td><td>₹${fmt(p.fm)}</td></tr>`).join('');
+
+document.getElementById('res').style.display='block';
+document.getElementById('db').style.display='flex';
+}catch(err){alert('Error: '+err.message)}
+document.getElementById('sp').classList.remove('s');
+document.getElementById('bt').textContent='🔍 Analyze & Generate Report';
+document.getElementById('ab').disabled=false;
+},100);
+}
+
+function sw(n){
+document.querySelectorAll('.tab').forEach(t=>t.classList.remove('a'));
+document.querySelectorAll('.tc').forEach(t=>t.classList.remove('a'));
+event.target.classList.add('a');
+document.getElementById('t'+n).classList.add('a');
+}
+
+function dl(){
+if(!result)return;
+try{
+const r=result;
+const w=XLSX.utils.book_new();
+
+const s1=[['S.No','Brand','Product Title','Category','MRP (₹)','Quantity','Mfg Date','Expiry Date','Days Left','Ageing Slab','Lot Status','WH Type','Yield','Tenative','TCS','TCS Value','Tentative Final (₹)','Final MRP (₹)','Priority']];
+r.prods.forEach(p=>s1.push([p.idx,p.brand,p.title,p.cat,p.mrp,Math.round(p.qty),p.mfg,p.exp,p.daysLeft,p.slab,p.lot,p.whType,p.yieldPct,p.tenative,p.tcs,p.tcsVal,Math.round(p.tf*100)/100,Math.round(p.fm*100)/100,p.pri]));
+s1.push(['TOTAL','','','','',Math.round(r.tQ),'','','','','','','','','','',Math.round(r.tTF*100)/100,Math.round(r.tFM*100)/100,'']);
+const ws1=XLSX.utils.aoa_to_sheet(s1);
+ws1['!cols']=[{wch:5},{wch:18},{wch:45},{wch:18},{wch:10},{wch:10},{wch:14},{wch:14},{wch:10},{wch:16},{wch:14},{wch:10},{wch:8},{wch:14},{wch:8},{wch:14},{wch:22},{wch:18},{wch:16}];
+XLSX.utils.book_append_sheet(w,ws1,'Analysis');
+
+const s2=[['📊 PURCHASE DECISION DASHBOARD'],[''],['Total Products',r.prods.length],['Total Quantity',Math.round(r.tQ)],['Total MRP Value','₹'+Math.round(r.tMRP)],['Total Tentative Final','₹'+Math.round(r.tTF*100)/100],['Total Final MRP','₹'+Math.round(r.tFM*100)/100],['Discount','₹'+Math.round((r.tMRP-r.tTF)*100)/100],['Discount %',r.discount.toFixed(1)+'%'],[''],['🎯 Verdict',r.verdict],[''],['📦 Priority Breakdown'],['Priority','Products','Tentative Final (₹)','Final MRP (₹)'],['CRITICAL',r.crit.length,'₹'+Math.round(r.crit.reduce((s,p)=>s+p.tf,0)*100)/100,'₹'+Math.round(r.crit.reduce((s,p)=>s+p.fm,0)*100)/100],['MEDIUM',r.med.length,'₹'+Math.round(r.med.reduce((s,p)=>s+p.tf,0)*100)/100,'₹'+Math.round(r.med.reduce((s,p)=>s+p.fm,0)*100)/100],['SAFE',r.safe.length,'₹'+Math.round(r.safe.reduce((s,p)=>s+p.tf,0)*100)/100,'₹'+Math.round(r.safe.reduce((s,p)=>s+p.fm,0)*100)/100]];
+const ws2=XLSX.utils.aoa_to_sheet(s2);
+ws2['!cols']=[{wch:40},{wch:20},{wch:22},{wch:20}];
+XLSX.utils.book_append_sheet(w,ws2,'Purchase Decision');
+
+const s3=[['S.No','Brand','Product','MRP','Qty','Expiry','Days Left','Tentative Final (₹)','Final MRP (₹)']];
+r.prods.filter(p=>p.pri==='CRITICAL').sort((a,b)=>a.daysLeft-b.daysLeft).forEach((p,i)=>s3.push([i+1,p.brand,p.title,p.mrp,Math.round(p.qty),p.exp,p.daysLeft,Math.round(p.tf*100)/100,Math.round(p.fm*100)/100]));
+const ws3=XLSX.utils.aoa_to_sheet(s3);
+ws3['!cols']=[{wch:6},{wch:18},{wch:45},{wch:10},{wch:8},{wch:14},{wch:12},{wch:22},{wch:18}];
+XLSX.utils.book_append_sheet(w,ws3,'Critical Items');
+
+const fname='Warehouse_Auction_'+r.wh.replace(/[^a-zA-Z0-9]/g,'_')+'.xlsx';
+
+// Try multiple download methods
+if(typeof XLSX.writeFile==='function'){
+  try{
+    XLSX.writeFile(w,fname);
+    return;
+  }catch(e1){
+    console.log('writeFile failed:',e1);
+  }
+}
+
+// Fallback: create blob and download
+try{
+  const wbOut=XLSX.write(w,{bookType:'xlsx',type:'array'});
+  const blob=new Blob([wbOut],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download=fname;
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(()=>{document.body.removeChild(a);URL.revokeObjectURL(url)},1000);
+}catch(e2){
+  alert('Download failed: '+e2.message);
+}
+}
+</script>
+</body>
+</html>
