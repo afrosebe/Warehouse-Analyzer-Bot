@@ -1,0 +1,425 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"><title>📦 Warehouse Auction Analyzer</title><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);min-height:100vh;color:#e0e0e0;padding:16px}.w{max-width:900px;margin:0 auto}h1{text-align:center;font-size:22px;margin-bottom:4px;background:linear-gradient(90deg,#00d2ff,#3a7bd5);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.sub{text-align:center;font-size:12px;color:#888;margin-bottom:18px}.c{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:18px;margin-bottom:14px;backdrop-filter:blur(10px)}.t{font-size:15px;font-weight:700;margin-bottom:12px;color:#fff}.u{border:2px dashed rgba(0,210,255,.4);border-radius:12px;padding:28px 14px;text-align:center;cursor:pointer;transition:.3s;background:rgba(0,210,255,.03)}.u:hover,.u.d{border-color:#00d2ff;background:rgba(0,210,255,.08)}.u .i{font-size:36px;margin-bottom:6px}.u .x{font-size:13px;color:#aaa}.u .x b{color:#00d2ff}#fi{display:none}.finfo{display:none;background:rgba(0,255,136,.08);border:1px solid rgba(0,255,136,.3);border-radius:10px;padding:10px 14px;margin-top:10px;font-size:12px;color:#00ff88;align-items:center;gap:8px}.finfo.show{display:flex}.dbg{background:rgba(255,100,0,.1);border:1px solid rgba(255,100,0,.3);border-radius:8px;padding:8px;margin-top:8px;font-size:10px;color:#ffa070;display:none;word-break:break-all}select{width:100%;padding:11px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;font-size:14px;outline:none;-webkit-appearance:none;appearance:none}select:focus{border-color:#00d2ff}select option{background:#1a1a2e;color:#fff}label{display:block;font-size:12px;color:#999;margin-bottom:5px}.btn{width:100%;padding:13px;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;transition:.3s;display:flex;align-items:center;justify-content:center;gap:8px}.btnp{background:linear-gradient(135deg,#00d2ff,#3a7bd5);color:#fff}.btnp:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,210,255,.3)}.btnp:disabled{opacity:.4;cursor:not-allowed}.btns{background:linear-gradient(135deg,#00b09b,#96c93d);color:#fff}.btns:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,176,155,.3)}.sp{display:none;width:18px;height:18px;border:3px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite}.sp.show{display:inline-block}@keyframes spin{to{transform:rotate(360deg)}}#r{display:none}.kg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}.kc{background:rgba(255,255,255,.05);border-radius:12px;padding:12px;text-align:center;border:1px solid rgba(255,255,255,.08)}.kc .v{font-size:20px;font-weight:800;background:linear-gradient(90deg,#00d2ff,#3a7bd5);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.kc .l{font-size:10px;color:#888;margin-top:3px}.kc.hl .v{background:linear-gradient(90deg,#ff6b6b,#ffa500);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.kc.ok .v{background:linear-gradient(90deg,#00b09b,#96c93d);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.vd{text-align:center;padding:14px;border-radius:12px;font-size:16px;font-weight:800;margin-bottom:14px}.vd.vb{background:rgba(0,176,155,.15);border:1px solid rgba(0,176,155,.4);color:#00ff88}.vd.vc{background:rgba(255,165,0,.15);border:1px solid rgba(255,165,0,.4);color:#ffa500}.vd.vk{background:rgba(255,68,68,.15);border:1px solid rgba(255,68,68,.4);color:#ff6b6b}table{width:100%;border-collapse:collapse;font-size:11px}th{background:rgba(0,210,255,.15);color:#00d2ff;padding:8px 6px;text-align:center;font-weight:700;position:sticky;top:0;z-index:1}td{padding:7px 6px;text-align:center;border-bottom:1px solid rgba(255,255,255,.05)}tr:hover td{background:rgba(255,255,255,.03)}.bd{display:inline-block;padding:2px 7px;border-radius:20px;font-size:9px;font-weight:700}.bc{background:rgba(255,68,68,.2);color:#ff6b6b}.bm{background:rgba(255,165,0,.2);color:#ffa500}.bsf{background:rgba(0,176,155,.2);color:#00ff88}.tw{max-height:350px;overflow:auto;border-radius:10px;border:1px solid rgba(255,255,255,.08)}.tabs{display:flex;gap:5px;margin-bottom:12px}.tab{flex:1;padding:9px;text-align:center;border-radius:10px;font-size:11px;font-weight:600;cursor:pointer;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:#888}.tab.a{background:rgba(0,210,255,.15);border-color:rgba(0,210,255,.4);color:#00d2ff}.tc{display:none}.tc.a{display:block}.tips{background:rgba(255,165,0,.08);border:1px solid rgba(255,165,0,.2);border-radius:10px;padding:12px;margin-top:10px}.tips h3{font-size:13px;color:#ffa500;margin-bottom:6px}.tips li{font-size:11px;color:#ccc;margin-bottom:3px;margin-left:14px}.ft{text-align:center;font-size:10px;color:#555;margin-top:20px;padding:10px}</style></head>
+<body><div class="w">
+<h1>📦 Warehouse Auction Analyzer</h1>
+<p class="sub">Excel upload → Select Warehouse → Analyze → Download</p>
+
+<div class="c">
+  <div class="t">📁 Step 1: Upload Excel File</div>
+  <div class="u" id="up"><div class="i">📎</div><div class="x"><b>Tap to upload</b> or drag & drop<br>.xlsx file</div></div>
+  <input type="file" id="fi" accept=".xlsx,.xls">
+  <div class="finfo" id="finfo"><span style="font-size:20px">✅</span><span id="fn"></span></div>
+  <div class="dbg" id="dbg"></div>
+</div>
+
+<div class="c" id="s2" style="opacity:.4;pointer-events:none">
+  <div class="t">🏭 Step 2: Select Warehouse ID</div>
+  <label>Choose warehouse:</label>
+  <select id="ws" style="margin-top:5px"><option value="">-- Select --</option></select>
+</div>
+
+<div class="c" id="s3" style="opacity:.4;pointer-events:none">
+  <div class="t">🚀 Step 3: Analyze</div>
+  <button class="btn btnp" id="ab" onclick="go()">
+    <span class="sp" id="sp"></span>
+    <span id="bt">🔍 Analyze & Generate Report</span>
+  </button>
+</div>
+
+<div id="r">
+  <div class="c">
+    <div class="t">📊 Analysis Results</div>
+    <div class="kg">
+      <div class="kc"><div class="v" id="rp">-</div><div class="l">Products</div></div>
+      <div class="kc"><div class="v" id="rq">-</div><div class="l">Total Qty</div></div>
+      <div class="kc hl"><div class="v" id="rt">-</div><div class="l">Tentative Final (₹)</div></div>
+      <div class="kc"><div class="v" id="rf">-</div><div class="l">Final MRP (₹)</div></div>
+      <div class="kc"><div class="v" id="rm">-</div><div class="l">MRP Value (₹)</div></div>
+      <div class="kc ok"><div class="v" id="rd">-</div><div class="l">Discount %</div></div>
+    </div>
+    <div class="vd" id="vd"></div>
+  </div>
+
+  <div class="c">
+    <div class="tabs">
+      <div class="tab a" onclick="sw(this,'ta')">📋 Analysis</div>
+      <div class="tab" onclick="sw(this,'ts')">📦 Summary</div>
+      <div class="tab" onclick="sw(this,'tc2')">🔴 Critical</div>
+    </div>
+    <div class="tc a" id="ta">
+      <div class="tw"><table><thead><tr><th>#</th><th>Brand</th><th>Product</th><th>MRP</th><th>Qty</th><th>Expiry</th><th>Days</th><th>Ageing</th><th>Tentative Final</th><th>Priority</th></tr></thead><tbody id="tb"></tbody></table></div>
+    </div>
+    <div class="tc" id="ts"></div>
+    <div class="tc" id="tc2">
+      <div class="tw"><table><thead><tr><th>#</th><th>Brand</th><th>Product</th><th>MRP</th><th>Qty</th><th>Expiry</th><th>Days</th><th>Tentative Final</th><th>Final MRP</th></tr></thead><tbody id="tcb"></tbody></table></div>
+    </div>
+  </div>
+
+  <div class="c" style="text-align:center">
+    <button class="btn btns" id="db" onclick="dl()">📥 Download Excel Report</button>
+  </div>
+</div>
+
+<div class="ft">Warehouse Auction Analyzer • Fixed v2 ✅</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+let allData=[], headers=[], result=null;
+const up=document.getElementById('up'), fi=document.getElementById('fi');
+
+up.onclick=()=>fi.click();
+up.ondragover=e=>{e.preventDefault();up.classList.add('d')};
+up.ondragleave=()=>up.classList.remove('d');
+up.ondrop=e=>{e.preventDefault();up.classList.remove('d');if(e.dataTransfer.files.length)handle(e.dataTransfer.files[0])};
+fi.onchange=e=>{if(e.target.files.length)handle(e.target.files[0])};
+
+function dbg(msg){
+  const d=document.getElementById('dbg');
+  d.style.display='block';
+  d.innerHTML+=msg+'<br>';
+}
+
+function handle(f){
+  if(!f.name.match(/\.xlsx?$/i)){alert('Please upload .xlsx file');return}
+  document.getElementById('fn').textContent=' '+f.name+' ('+(f.size/1024).toFixed(1)+' KB)';
+  document.getElementById('finfo').classList.add('show');
+  document.getElementById('dbg').innerHTML='';
+  const reader=new FileReader();
+  reader.onload=e=>{
+    try{
+      const wb=XLSX.read(e.target.result,{type:'array',cellDates:true});
+      const sn=wb.SheetNames.find(s=>s.toLowerCase().includes('data'))||wb.SheetNames[0];
+      dbg('📄 Sheet: '+sn);
+      const j=XLSX.utils.sheet_to_json(wb.Sheets[sn],{header:1,raw:false,defval:null});
+      if(j.length<2){alert('File empty hai!');return}
+      headers=j[0];
+      dbg('📋 Columns found: '+headers.filter(Boolean).join(' | '));
+      allData=j.slice(1).filter(r=>r.some(c=>c!==null&&c!==''));
+      dbg('📦 Data rows: '+allData.length);
+      const whCol=headers.findIndex(h=>h&&h.toString().toLowerCase().includes('warehouse'));
+      if(whCol===-1){
+        alert('❌ "warehouse" column nahi mila!\nFound columns: '+headers.filter(Boolean).join(', '));
+        return;
+      }
+      const whs=[...new Set(allData.map(r=>r[whCol]).filter(Boolean))].sort();
+      const sel=document.getElementById('ws');
+      sel.innerHTML='<option value="">-- Select --</option>';
+      whs.forEach(w=>{
+        const cnt=allData.filter(r=>r[whCol]===w).length;
+        sel.innerHTML+=`<option value="${w}">${w} (${cnt} products)</option>`;
+      });
+      document.getElementById('s2').style.cssText='opacity:1;pointer-events:auto';
+      document.getElementById('s3').style.cssText='opacity:1;pointer-events:auto';
+    }catch(err){alert('File read error: '+err.message);}
+  };
+  reader.readAsArrayBuffer(f);
+}
+
+document.getElementById('ws').onchange=function(){
+  document.getElementById('s3').style.opacity=this.value?'1':'0.4';
+  document.getElementById('s3').style.pointerEvents=this.value?'auto':'none';
+  document.getElementById('r').style.display='none';
+};
+
+function pf(v){
+  if(v===null||v===undefined||v==='')return 0;
+  if(typeof v==='number')return isFinite(v)?v:0;
+  if(typeof v==='string'){
+    const s=v.replace(/[^0-9.\-]/g,'');
+    if(!s||s==='-'||s==='.')return 0;
+    const n=parseFloat(s);
+    return isFinite(n)?n:0;
+  }
+  return 0;
+}
+
+function fmt(v){
+  v=Math.round(v*100)/100;
+  if(v>=10000000)return(v/10000000).toFixed(2)+'Cr';
+  if(v>=100000)return(v/100000).toFixed(2)+'L';
+  if(v>=1000)return(v/1000).toFixed(1)+'K';
+  if(v>=100)return Math.round(v).toLocaleString('en-IN');
+  return v.toFixed(2);
+}
+
+function sw(el,tabId){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('a'));
+  document.querySelectorAll('.tc').forEach(t=>t.classList.remove('a'));
+  el.classList.add('a');
+  document.getElementById(tabId).classList.add('a');
+}
+
+function go(){
+  const wh=document.getElementById('ws').value;
+  if(!wh)return;
+  document.getElementById('sp').classList.add('show');
+  document.getElementById('bt').textContent='Analyzing...';
+  document.getElementById('ab').disabled=true;
+
+  setTimeout(()=>{
+    try{
+      // ============ FIX 1: COLUMN DETECTION - Priority order matters! ============
+      // Must detect compound columns (tentative final, final mrp, tcs value)
+      // BEFORE simple ones (tentative, mrp, tcs) to avoid wrong assignment
+      const col={};
+
+      headers.forEach((h,i)=>{
+        if(!h)return;
+        const hl=h.toString().toLowerCase().trim();
+
+        // Compound checks FIRST
+        if(hl.includes('warehouse'))                                 col.wh=i;
+        else if(hl.includes('brand'))                                col.brand=i;
+        else if(hl.includes('category'))                             col.cat=i;
+        else if(hl.includes('product')||hl.includes('item name')||hl.includes('item'))  col.title=i;
+        else if(hl.includes('yield'))                                col.yield=i;
+        else if(hl.includes('tcs value')||hl.includes('tcsvalue'))   col.tcsval=i;
+        else if(hl.includes('tcs')&&!hl.includes('value'))           col.tcs=i;
+        // TENTATIVE FINAL must come before plain "tentative"
+        else if(hl.includes('tentative final')||hl.includes('tentative_final')||
+                hl.includes('tenative final')||hl.includes('tenative_final')||
+                hl==='tf'||hl==='tent final'||hl==='tent. final')    col.tf=i;
+        // FINAL MRP must come before plain "mrp"
+        else if(hl.includes('final mrp')||hl.includes('final_mrp')||
+                hl==='fm'||hl.includes('final value'))                col.fm=i;
+        // Now plain "mrp"
+        else if(hl.includes('mrp'))                                  col.mrp=i;
+        // Plain "tentative" (fallback — only if tentative final not found)
+        else if(hl.includes('tenative')||hl.includes('tentative'))   col.tenative=i;
+        else if(hl.includes('quantity')||hl.includes('qty'))         col.qty=i;
+        else if(hl.includes('mfg')||hl.includes('manufacturing')||hl.includes('mfd')) col.mfg=i;
+        else if(hl.includes('expiry')||hl.includes('expire')||hl.includes('exp date'))col.exp=i;
+        else if(hl.includes('aging')||hl.includes('ageing')||hl.includes('age'))      col.aging=i;
+        else if(hl.includes('slab'))                                 col.slab=i;
+        else if(hl.includes('lot'))                                  col.lot=i;
+        else if(hl.includes('wh type')||hl==='type')                 col.whtype=i;
+      });
+
+      // Fallback: if "Tentative Final" not found, use plain "Tentative" column
+      if(col.tf===undefined && col.tenative!==undefined){
+        col.tf=col.tenative;
+        dbg('⚠️ "Tentative Final" column not found — using "Tentative" as fallback (index '+col.tenative+')');
+      }
+
+      dbg('🗺️ Column map: '+JSON.stringify(col));
+
+      if(col.tf===undefined) dbg('❌ WARNING: Tentative Final column NOT detected! Check column name in Excel.');
+      if(col.fm===undefined) dbg('❌ WARNING: Final MRP column NOT detected!');
+      if(col.mrp===undefined) dbg('❌ WARNING: MRP column NOT detected!');
+      if(col.qty===undefined) dbg('❌ WARNING: Qty column NOT detected!');
+
+      const rows=allData.filter(r=>r[col.wh]===wh);
+      dbg('🏭 Rows for '+wh+': '+rows.length);
+
+      const today=new Date(); today.setHours(0,0,0,0);
+      let tQ=0, tTF=0, tFM=0, tMRP=0;
+      const prods=[];
+
+      rows.forEach((r,idx)=>{
+        const mrp=col.mrp!==undefined?pf(r[col.mrp]):0;
+        const qty=col.qty!==undefined?pf(r[col.qty]):0;
+        const tf=col.tf!==undefined?pf(r[col.tf]):0;
+        const fm=col.fm!==undefined?pf(r[col.fm]):0;
+        const aging=col.aging!==undefined?pf(r[col.aging]):0;
+        const yieldPct=col.yield!==undefined?pf(r[col.yield]):0;
+        const tcs=col.tcs!==undefined?pf(r[col.tcs]):0;
+        const tcsVal=col.tcsval!==undefined?pf(r[col.tcsval]):0;
+
+        let daysLeft=aging;
+        if(col.exp!==undefined && r[col.exp]){
+          const ed=new Date(r[col.exp]);
+          if(!isNaN(ed)) daysLeft=Math.ceil((ed-today)/86400000);
+        }
+
+        let pri,bd;
+        if(daysLeft<=30){pri='CRITICAL';bd='bc';}
+        else if(daysLeft<=60){pri='MEDIUM';bd='bm';}
+        else{pri='SAFE';bd='bsf';}
+
+        prods.push({
+          idx:idx+1,
+          brand:r[col.brand]||'',
+          title:r[col.title]||'',
+          cat:r[col.cat]||'',
+          mrp, qty,
+          mfg: col.mfg!==undefined&&r[col.mfg] ? new Date(r[col.mfg]).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}) : '-',
+          exp: col.exp!==undefined&&r[col.exp] ? new Date(r[col.exp]).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}) : '-',
+          daysLeft:Math.round(daysLeft),
+          aging, slab:col.slab!==undefined?r[col.slab]||'':'-',
+          lot:col.lot!==undefined?r[col.lot]||'':'-',
+          whType:col.whtype!==undefined?r[col.whtype]||'':'-',
+          yieldPct, tcsVal, tcs, tf, fm, pri, bd
+        });
+
+        tQ+=qty; tTF+=tf; tFM+=fm; tMRP+=mrp*qty;
+      });
+
+      dbg(`✅ Totals → tQ:${tQ.toFixed(0)}, tTF:${tTF.toFixed(2)}, tFM:${tFM.toFixed(2)}, tMRP:${tMRP.toFixed(2)}`);
+
+      const disc=tMRP>0?((tMRP-tTF)/tMRP*100):0;
+      let ver,vcl;
+      if(disc>=25){ver='✅ STRONG BUY';vcl='vb';}
+      else if(disc>=15){ver='🟡 CONSIDER';vcl='vc';}
+      else if(disc>=10){ver='⚠️ WEAK BUY';vcl='vk';}
+      else{ver='❌ SKIP';vcl='vk';}
+
+      const crit=prods.filter(p=>p.pri==='CRITICAL'),
+            med=prods.filter(p=>p.pri==='MEDIUM'),
+            safe=prods.filter(p=>p.pri==='SAFE');
+      const cats={};
+      prods.forEach(p=>{const c=p.cat||'Unknown';cats[c]=(cats[c]||0)+p.qty;});
+
+      result={wh,prods,tQ,tTF,tFM,tMRP,discount:disc,ver,vcl,crit,med,safe,cats};
+
+      // KPI Cards
+      document.getElementById('rp').textContent=prods.length;
+      document.getElementById('rq').textContent=Math.round(tQ).toLocaleString('en-IN');
+      document.getElementById('rt').textContent='₹'+fmt(tTF);
+      document.getElementById('rf').textContent='₹'+fmt(tFM);
+      document.getElementById('rm').textContent='₹'+fmt(tMRP);
+      document.getElementById('rd').textContent=disc.toFixed(1)+'%';
+
+      const vdEl=document.getElementById('vd');
+      vdEl.textContent=ver; vdEl.className='vd '+vcl;
+
+      // Analysis table
+      document.getElementById('tb').innerHTML=prods.map(p=>`<tr>
+        <td>${p.idx}</td>
+        <td style="text-align:left;font-weight:600">${p.brand}</td>
+        <td style="text-align:left;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${p.title}">${p.title}</td>
+        <td>₹${p.mrp.toFixed(0)}</td>
+        <td>${Math.round(p.qty)}</td>
+        <td>${p.exp}</td>
+        <td style="color:${p.daysLeft<=30?'#ff6b6b':p.daysLeft<=60?'#ffa500':'#00ff88'};font-weight:700">${p.daysLeft}</td>
+        <td>${p.slab}</td>
+        <td style="font-weight:700;color:#00d2ff">₹${fmt(p.tf)}</td>
+        <td><span class="bd ${p.bd}">${p.pri}</span></td>
+      </tr>`).join('');
+
+      // Summary tab
+      const cTF=crit.reduce((s,p)=>s+p.tf,0), mTF=med.reduce((s,p)=>s+p.tf,0), sTF=safe.reduce((s,p)=>s+p.tf,0);
+      document.getElementById('ts').innerHTML=`
+        <div class="kg" style="grid-template-columns:1fr 1fr 1fr">
+          <div class="kc" style="border-left:3px solid #ff6b6b"><div class="v" style="font-size:14px;color:#ff6b6b">${crit.length}</div><div class="l">🔴 Critical</div><div class="l" style="margin-top:2px">₹${fmt(cTF)}</div></div>
+          <div class="kc" style="border-left:3px solid #ffa500"><div class="v" style="font-size:14px;color:#ffa500">${med.length}</div><div class="l">🟡 Medium</div><div class="l" style="margin-top:2px">₹${fmt(mTF)}</div></div>
+          <div class="kc" style="border-left:3px solid #00ff88"><div class="v" style="font-size:14px;color:#00ff88">${safe.length}</div><div class="l">🟢 Safe</div><div class="l" style="margin-top:2px">₹${fmt(sTF)}</div></div>
+        </div>
+        <h3 style="font-size:13px;color:#00d2ff;margin:10px 0 6px">📦 Categories</h3>
+        ${Object.entries(cats).sort((a,b)=>b[1]-a[1]).map(([c,q])=>`<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.05)"><span style="font-size:12px">${c}</span><span style="font-size:12px;font-weight:600">${Math.round(q).toLocaleString('en-IN')} (${(q/tQ*100).toFixed(1)}%)</span></div>`).join('')}
+        <div class="tips"><h3>💡 Tips</h3><ul>
+          <li>Critical items mein zyada discount negotiate karo</li>
+          <li>Bid Tentative Final se 10-15% kam pe lagao</li>
+          <li>High MRP items pe focus karo — better resale margin</li>
+          <li>Tentative Final &lt; 70% MRP = strong buy signal</li>
+        </ul></div>`;
+
+      // Critical tab
+      document.getElementById('tcb').innerHTML=prods.filter(p=>p.pri==='CRITICAL').sort((a,b)=>a.daysLeft-b.daysLeft).map((p,i)=>`<tr>
+        <td>${i+1}</td>
+        <td style="font-weight:600">${p.brand}</td>
+        <td style="text-align:left;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${p.title}">${p.title}</td>
+        <td>₹${p.mrp.toFixed(0)}</td>
+        <td>${Math.round(p.qty)}</td>
+        <td>${p.exp}</td>
+        <td style="color:#ff6b6b;font-weight:800">${p.daysLeft}d</td>
+        <td style="font-weight:700;color:#00d2ff">₹${fmt(p.tf)}</td>
+        <td>₹${fmt(p.fm)}</td>
+      </tr>`).join('');
+
+      document.getElementById('r').style.display='block';
+
+    }catch(err){
+      alert('Analysis Error: '+err.message);
+      dbg('❌ ERROR: '+err.message);
+    }
+
+    document.getElementById('sp').classList.remove('show');
+    document.getElementById('bt').textContent='🔍 Analyze & Generate Report';
+    document.getElementById('ab').disabled=false;
+  },100);
+}
+
+// ============ FIX 2: ROBUST DOWNLOAD — Blob method (works on mobile & all browsers) ============
+function dl(){
+  if(!result){alert('Pehle analyze karo!');return}
+  try{
+    const r=result;
+    const wb=XLSX.utils.book_new();
+
+    // Sheet 1: Full Analysis
+    const s1=[['S.No','Brand','Product','Category','MRP','Qty','Mfg Date','Expiry','Days Left','Slab','Yield %','TCS %','TCS Value','Tentative Final','Final MRP','Priority']];
+    r.prods.forEach(p=>s1.push([
+      p.idx, p.brand, p.title, p.cat,
+      p.mrp, Math.round(p.qty), p.mfg, p.exp, p.daysLeft, p.slab,
+      p.yieldPct, p.tcs||0, p.tcsVal,
+      Math.round(p.tf*100)/100,
+      Math.round(p.fm*100)/100,
+      p.pri
+    ]));
+    // TOTAL row
+    s1.push(['TOTAL','','','','',Math.round(r.tQ),'','','','','','','',
+      Math.round(r.tTF*100)/100,
+      Math.round(r.tFM*100)/100,
+      ''
+    ]);
+    const ws1=XLSX.utils.aoa_to_sheet(s1);
+    ws1['!cols']=[{wch:5},{wch:18},{wch:40},{wch:15},{wch:10},{wch:8},{wch:14},{wch:12},{wch:8},{wch:14},{wch:8},{wch:6},{wch:12},{wch:16},{wch:16},{wch:12}];
+    XLSX.utils.book_append_sheet(wb,ws1,'Analysis');
+
+    // Sheet 2: Purchase Decision
+    const s2=[
+      ['PURCHASE DECISION SUMMARY'],[''],
+      ['Warehouse ID',r.wh],
+      ['Total Products',r.prods.length],
+      ['Total Quantity',Math.round(r.tQ)],
+      ['MRP Value (₹)',Math.round(r.tMRP)],
+      ['Tentative Final (₹)',Math.round(r.tTF)],
+      ['Final MRP (₹)',Math.round(r.tFM)],
+      ['Discount %',r.discount.toFixed(1)+'%'],[''],
+      ['Verdict',r.ver],[''],
+      ['Priority','Count','Tentative Final (₹)','Final MRP (₹)'],
+      ['CRITICAL',r.crit.length,
+        Math.round(r.crit.reduce((s,p)=>s+p.tf,0)),
+        Math.round(r.crit.reduce((s,p)=>s+p.fm,0))],
+      ['MEDIUM',r.med.length,
+        Math.round(r.med.reduce((s,p)=>s+p.tf,0)),
+        Math.round(r.med.reduce((s,p)=>s+p.fm,0))],
+      ['SAFE',r.safe.length,
+        Math.round(r.safe.reduce((s,p)=>s+p.tf,0)),
+        Math.round(r.safe.reduce((s,p)=>s+p.fm,0))]
+    ];
+    const ws2=XLSX.utils.aoa_to_sheet(s2);
+    ws2['!cols']=[{wch:30},{wch:18},{wch:22},{wch:18}];
+    XLSX.utils.book_append_sheet(wb,ws2,'Decision');
+
+    // Sheet 3: Critical Items
+    const s3=[['#','Brand','Product','MRP','Qty','Expiry','Days Left','Tentative Final','Final MRP']];
+    r.prods.filter(p=>p.pri==='CRITICAL').sort((a,b)=>a.daysLeft-b.daysLeft).forEach((p,i)=>
+      s3.push([i+1,p.brand,p.title,p.mrp,Math.round(p.qty),p.exp,p.daysLeft,
+        Math.round(p.tf*100)/100, Math.round(p.fm*100)/100])
+    );
+    const ws3=XLSX.utils.aoa_to_sheet(s3);
+    ws3['!cols']=[{wch:5},{wch:18},{wch:40},{wch:10},{wch:8},{wch:12},{wch:10},{wch:16},{wch:16}];
+    XLSX.utils.book_append_sheet(wb,ws3,'Critical');
+
+    // Generate file via Blob (most reliable cross-browser method)
+    const fname='Auction_'+r.wh.replace(/[^a-zA-Z0-9]/g,'_')+'_'+new Date().toISOString().slice(0,10)+'.xlsx';
+    const wbout=XLSX.write(wb,{bookType:'xlsx',type:'array'});
+    const blob=new Blob([wbout],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url;
+    a.download=fname;
+    a.style.display='none';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(()=>{document.body.removeChild(a);URL.revokeObjectURL(url);},2000);
+    dbg('✅ Downloaded: '+fname);
+
+  }catch(e){
+    alert('Download Error: '+e.message);
+    dbg('❌ Download ERROR: '+e.message);
+  }
+}
+</script>
+</body></html>
