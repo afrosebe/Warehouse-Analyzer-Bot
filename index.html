@@ -87,14 +87,22 @@ function handle(f){
   const reader=new FileReader();
   reader.onload=e=>{
     try{
-      const wb=XLSX.read(e.target.result,{type:'array',cellDates:true});
+      const wb=XLSX.read(e.target.result,{type:'array',cellDates:true,raw:false});
+      dbg('📂 Sheets: '+wb.SheetNames.join(', '));
       const sn=wb.SheetNames.find(s=>s.toLowerCase().includes('data'))||wb.SheetNames[0];
-      dbg('📄 Sheet: '+sn);
-      const j=XLSX.utils.sheet_to_json(wb.Sheets[sn],{header:1,raw:false,defval:null});
-      if(j.length<2){alert('File empty hai!');return}
-      headers=j[0];
-      dbg('📋 Columns found: '+headers.filter(Boolean).join(' | '));
-      allData=j.slice(1).filter(r=>r.some(c=>c!==null&&c!==''));
+      dbg('📄 Using sheet: '+sn);
+      const sheet=wb.Sheets[sn];
+      if(!sheet||!sheet['!ref']){alert('Sheet empty hai ya file corrupt hai!');return}
+      dbg('📐 Range: '+sheet['!ref']);
+      const j=XLSX.utils.sheet_to_json(sheet,{header:1,raw:false,defval:''});
+      dbg('📊 Total rows read: '+j.length);
+      // Filter out completely empty rows
+      const cleanJ=j.filter(r=>Array.isArray(r)&&r.some(c=>c!==null&&c!==undefined&&c!==''));
+      dbg('📊 Non-empty rows: '+cleanJ.length);
+      if(cleanJ.length<2){alert('File mein data nahi mila! Rows found: '+cleanJ.length+'\nPlease check Excel file.');return}
+      headers=cleanJ[0];
+      dbg('📋 Columns: '+headers.filter(Boolean).join(' | '));
+      allData=cleanJ.slice(1).filter(r=>r.some(c=>c!==null&&c!==undefined&&c!==''));
       dbg('📦 Data rows: '+allData.length);
       const whCol=headers.findIndex(h=>h&&h.toString().toLowerCase().includes('warehouse'));
       if(whCol===-1){
